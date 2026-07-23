@@ -1,0 +1,51 @@
+# 民事诉状生成与法律咨询系统 - 配置模板
+# 复制本文件为 settings.local.yaml 并填写真实密钥（settings.local.yaml 不会提交到仓库）
+
+# 主大模型（默认通义千问 qwen-max，DashScope OpenAI 兼容接口）
+llm:
+  provider: qwen
+  api_key: ""            # 在 settings.local.yaml 中填写
+  base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  model: "qwen-max"
+  temperature: 0.3
+  top_p: 0.8
+  max_tokens: 2048
+  timeout_seconds: 60
+  max_retries: 2
+
+# 兜底大模型（deepseek，OpenAI 兼容接口）
+fallback_llm:
+  enabled: true
+  provider: deepseek
+  api_key: ""            # 在 settings.local.yaml 中填写
+  base_url: "https://api.deepseek.com/v1"
+  model: "deepseek-chat"
+  temperature: 0.3
+  top_p: 0.8
+  max_tokens: 2048
+  timeout_seconds: 60
+  max_retries: 2
+
+# 检索配置
+retrieval:
+  top_k: 5
+  knowledge_dir: "data/legal"
+  index_dir: "data/index"
+  embedding_model: "BAAI/bge-small-zh-v1.5"
+
+# 数据库（SQLite）
+database:
+  path: "data/app.db"
+
+# 服务
+server:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins:
+    - "http://localhost:5173"
+    - "http://127.0.0.1:5173"
+
+# 日志
+logging:
+  level: "INFO"
+  file: "logs/app.log"
