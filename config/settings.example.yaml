@@ -31,7 +31,7 @@ retrieval:
   top_k: 5
   knowledge_dir: "data/legal"
   index_dir: "data/index"
-  embedding_model: "BAAI/bge-small-zh-v1.5"
+  embedding_model: "BAAI/bge-m3"   # 本地中文向量模型（本机已缓存；可改为 BAAI/bge-small-zh-v1.5）
 
 # 数据库（SQLite）
 database:

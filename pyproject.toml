@@ -9,10 +9,15 @@ dependencies = [
     "pydantic>=2.7.0",
     "pyyaml>=6.0.1",
     "httpx>=0.27.0",
-    # 阶段二（RAG 检索）启用：
-    # "faiss-cpu>=1.9.0",
-    # "sentence-transformers>=3.0.0",
-    # "numpy>=1.26.0",
+    "faiss-cpu>=1.9.0",
+    "numpy>=1.26.0",
+]
+
+[project.optional-dependencies]
+# 本地中文向量模型（bge-small-zh-v1.5），体积较大按需安装：uv sync --extra embed
+# 未安装时系统自动降级为哈希嵌入离线模式
+embed = [
+    "sentence-transformers>=3.0.0",
 ]
 
 [dependency-groups]
