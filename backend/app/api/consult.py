@@ -29,18 +29,24 @@ class ConsultRequest(BaseModel):
 
 
 @lru_cache(maxsize=1)
-def get_consult_service() -> ConsultService:
-    """基于全局配置构建咨询服务单例。"""
+def get_knowledge_service() -> KnowledgeService:
+    """基于全局配置构建知识库服务单例。"""
     settings = get_settings()
-    knowledge_service = KnowledgeService(
+    return KnowledgeService(
         knowledge_dir=settings.retrieval.knowledge_dir,
         index_dir=settings.retrieval.index_dir,
         database_path=settings.database_path,
         embedding_model=settings.retrieval.embedding_model,
     )
+
+
+@lru_cache(maxsize=1)
+def get_consult_service() -> ConsultService:
+    """基于全局配置构建咨询服务单例。"""
+    settings = get_settings()
     llm_clients = [LLMClient(settings.llm), LLMClient(settings.fallback_llm)]
     return ConsultService(
-        knowledge_service=knowledge_service,
+        knowledge_service=get_knowledge_service(),
         llm_clients=llm_clients,
         database_path=settings.database_path,
         top_k=settings.retrieval.top_k,
